@@ -1,0 +1,41 @@
+﻿@model List<Pastra.Models.Card>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="content">
+    <div class="rounded-pill">
+        <div class="float-start opponentCollected">
+            <img src="~/Resources/gray_back.png" class="card" />
+        </div>
+        <div class="opponentHand">
+            <img src="~/Resources/red_back.png" class="card" />
+            <img src="~/Resources/red_back.png" class="card" />
+            <img src="~/Resources/red_back.png" class="card" />
+            <img src="~/Resources/red_back.png" class="card" />
+        </div>
+        <div class="float-start">
+            <img src="~/Resources/red_back.png" class="card" />
+        </div>
+        <div class="float-start board">
+            @for (int i = 0; i < ViewBag.Board.Count; i++)
+            {
+                <img src="~/Resources/@ViewBag.Board[i].Image" class="card" />
+            }
+        </div>
+        <div class="float-start opponentCollected">
+            <img src="~/Resources/gray_back.png" class="card" />
+        </div>
+        <div class="playerHand">
+            @foreach (Pastra.Models.Card card in Model)
+            {
+                <a class="btn m-0 p-0 d-inline" href="@Url.Action("Index", "Home", new { id = card.ID }  )">
+                    <img src="~/Resources/@card.Image" class="card" />
+                </a>
+            }
+        </div>
+        <div class="clear"></div>
+        <br />
+    </div>
+</div>

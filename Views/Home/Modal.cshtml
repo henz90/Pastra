@@ -1,0 +1,16 @@
+﻿@model IEnumerable<Pastra.Models.Card>
+@using Pastra.Models;
+
+@foreach (Card card in Model)
+{
+    if (card.Pastra > 0)
+    {
+        <div class="pastra">
+            <img src="~/Resources/@card.Image" class="card" />
+        </div>
+    }
+    else
+    {
+        <img src="~/Resources/@card.Image" class="card" />
+    }
+}

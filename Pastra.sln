@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30503.244
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pastra", "Pastra.csproj", "{9A54FF63-D7B4-46DB-A32C-559390EC79EA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9A54FF63-D7B4-46DB-A32C-559390EC79EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A54FF63-D7B4-46DB-A32C-559390EC79EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A54FF63-D7B4-46DB-A32C-559390EC79EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A54FF63-D7B4-46DB-A32C-559390EC79EA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {34936FE1-F65E-4734-9889-C96C2D48C589}
+	EndGlobalSection
+EndGlobal
