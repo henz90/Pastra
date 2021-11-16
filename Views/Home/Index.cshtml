@@ -4,38 +4,87 @@
     ViewBag.Title = "Home Page";
 }
 
+<script src="~/Content/JavaScript.js"></script>
+
 <div class="content">
     <div class="rounded-pill">
-        <div class="float-start opponentCollected">
-            <img src="~/Resources/gray_back.png" class="card" />
-        </div>
-        <div class="opponentHand">
-            <img src="~/Resources/red_back.png" class="card" />
-            <img src="~/Resources/red_back.png" class="card" />
-            <img src="~/Resources/red_back.png" class="card" />
-            <img src="~/Resources/red_back.png" class="card" />
-        </div>
-        <div class="float-start">
-            <img src="~/Resources/red_back.png" class="card" />
-        </div>
-        <div class="float-start board">
-            @for (int i = 0; i < ViewBag.Board.Count; i++)
-            {
-                <img src="~/Resources/@ViewBag.Board[i].Image" class="card" />
-            }
-        </div>
-        <div class="float-start opponentCollected">
-            <img src="~/Resources/gray_back.png" class="card" />
-        </div>
-        <div class="playerHand">
-            @foreach (Pastra.Models.Card card in Model)
-            {
-                <a class="btn m-0 p-0 d-inline" href="@Url.Action("Index", "Home", new { id = card.ID }  )">
-                    <img src="~/Resources/@card.Image" class="card" />
-                </a>
-            }
-        </div>
-        <div class="clear"></div>
-        <br />
+        @if (ViewBag.Complete)
+        {
+            <table class="table table-sm table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Player Score</th>
+                        <th>Computer Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@ViewBag.PlayerScore</td>
+                        <td>@ViewBag.OpponentScore</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @foreach (Pastra.Models.Card card in ViewBag.playerCollected)
+                            {
+                                <img src="~/Resources/@card.Image" id="@card.ID" class="card @(card.Pastra > 0 ? "pastra" : "")" />
+                            }
+                        </td>
+                        <td>
+                            @foreach (Pastra.Models.Card card in ViewBag.opponentCollected)
+                            {
+                                <img src="~/Resources/@card.Image" id="@card.ID" class="card @(card.Pastra > 0 ? "pastra" : "")" />
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="float-start opponentCollected">
+
+                @if (ViewBag.OpponentPlay != null)
+                {
+                    <img src="~/Resources/@ViewBag.OpponentPlay.Image" id="@ViewBag.OpponentPlay.ID" class="card" />
+                }
+                else
+                {
+                    <img src="~/Resources/gray_back.png" class="card" />
+                }
+            </div>
+            <div class="opponentHand">
+                @foreach (Pastra.Models.Card card in ViewBag.OpponentHand)
+                {
+                    <img src="~/Resources/red_back.png" class="card" />
+                }
+                @*<img src="~/Resources/@card.Image" class="card" />*@
+            </div>
+
+            <br />
+            <div class="float-start">
+                <img src="~/Resources/red_back.png" class="card" />
+            </div>
+            <div class="float-start board">
+                @foreach (Pastra.Models.Card card in ViewBag.Board)
+                {
+                    <img src="~/Resources/@card.Image" id="@card.ID" class="inplay card @((int)card.Value)" />
+                }
+            </div>
+            <div class="clear"></div>
+            <br />
+            <div class="float-start playerCollected">
+                <img src="~/Resources/gray_back.png" class="card" />
+            </div>
+            <div class="playerHand">
+                @foreach (Pastra.Models.Card card in Model)
+                {
+                    <a href="@Url.Action("Index/" + @card.ID)" onclick="return false;">
+                        <img src="~/Resources/@card.Image" id="@card.ID" onclick="handClick(@((int)card.Value), @card.ID)" class="card" />
+                    </a>
+                }
+            </div>
+            <div class="clear"></div>
+        }
+
     </div>
 </div>

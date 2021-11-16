@@ -22,5 +22,7 @@ namespace Pastra.Models
         public static int HandSize = 4;
 
         public static int DeckSize = 52;
+
+        public static double Caution = 0.5;
     }
 }
