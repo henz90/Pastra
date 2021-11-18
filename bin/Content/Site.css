@@ -15,9 +15,14 @@ h1, h2 {
     max-height: 264px;
 }
 
+.points {
+    background-color: crimson;
+    border-color: crimson;
+}
+
 .pastra {
-    background-color: goldenrod;
-    border-color: goldenrod;
+    background-color: indigo;
+    border-color: indigo;
 }
 
 .board {
@@ -25,14 +30,13 @@ h1, h2 {
     padding: 1px;
     border: solid 2px black;
     background-color: black;
-    width: 1000px;
     min-height: 265px;
+    min-width: 710px;
 }
 
 .opponentHand, .playerHand {
     padding: 1px;
     min-height: 265px;
-/*    max-width: 710px;  */  
 }
 
 .playerHand img {

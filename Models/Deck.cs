@@ -31,11 +31,48 @@ namespace Pastra.Models
                         ID = i,
                         Suit = s,
                         Value = v,
-                        Pastra = 0,
+                        Pastra = 0
                     };
                     i++;
                 }
             }
+
+            foreach (Card card in remainingDeck)
+            {
+                getPoints(card);
+            }
+        }
+
+        private void getPoints(Card card)
+        {
+            int points = 0;
+
+            switch (card.Value)
+            {
+                case VALUE.ACE:
+                    points = 1;
+                    break;
+                case VALUE.TWO:
+                    if (card.Suit.Equals(Card.SUIT.CLUBS))
+                    {
+                        points = 2;
+                    }
+                    break;
+                case VALUE.TEN:
+                    if (card.Suit.Equals(Card.SUIT.DIAMONDS))
+                    {
+                        points = 3;
+                    }
+                    break;
+                case VALUE.JACK:
+                    points = 1;
+                    break;
+                default:
+                    points = 0;
+                    break;
+            }
+
+            card.Points = points;
         }
 
         public void ShuffleDeck()

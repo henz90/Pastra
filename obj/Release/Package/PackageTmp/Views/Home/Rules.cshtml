@@ -1,0 +1,90 @@
+﻿@using Pastra.Models;
+
+@{
+    ViewBag.Title = "Rules";
+}
+
+<div class="content">
+    <div class="rounded-pill">
+        <h1 class="center text-center page-header">Rules</h1>
+        <h2>The Game</h2>
+        <div>
+            <span>
+                This game is played with a 52 card deck and the first player to score 100 points is the winner.
+            </span>
+        </div>
+        <h2>The Play</h2>
+        <div>
+            <span>
+                The dealer starts by dealing 1 card to each player until each player has 4 cards.
+                <br />
+                The dealer then places 4 cards in the middle of the table, called the board.
+                <br />
+                If 1 or more of the 4 boards cards is a @Html.Raw(HttpUtility.HtmlDecode(@Global.Jack)), the dealer redeals.
+                <br />
+                If any player or the boards starts with three of a kind, the dealer redeals.
+                <br />
+                The player who didn't deal begins, until all cards are played out.
+                <br />
+                The players either collect (fish) cards from the board or add a card to the board, if they cannot fish any cards.
+                <br />
+                After the cards are exhausted, the dealer then deals each player 4 more cards from the remaining deck.
+                <br />
+                Hands are played out until there are no remaining cards to be dealt.
+                <br />
+                In this two player version, each round has six hands.
+            </span>
+        </div>
+        <h2>Scoring</h2>
+        <div>
+            <span>
+                The scoring is as follows:
+                <br />
+            </span>
+            <ul>
+                <li>The @Html.Raw(HttpUtility.HtmlDecode(@Global.Ace)), which have a numeral value of 1, are worth 1 point each.</li>
+                <li>The @Html.Raw(HttpUtility.HtmlDecode(@Global.Jack))s are worth 1 point each.</li>
+                <li>The @Html.Raw(HttpUtility.HtmlDecode(@Global.TwoC)) is worth 2 points.</li>
+                <li>The @Html.Raw(HttpUtility.HtmlDecode(@Global.TenD)) is worth 3 points.</li>
+                <li>The player collects the most cards in a given hand receives 3 points.</li>
+                <li>The player that collects all the cards in play without benefit of a @Html.Raw(HttpUtility.HtmlDecode(@Global.Jack)) receives a pastra.</li>
+            </ul>
+        </div>
+        <h2>Collecting Cards</h2>
+        <div>
+            <span>
+                The object of the game is to collect the largest number of cards and cards that are worth points. Cards are collected as follows:
+            </span>
+            <ul>
+                <li><b>Pairing: </b> Any card may be used to take another card or cards of the same denomination.</li>
+                <li><b>Combining: </b> Multiple cards may be collected through adding the numeral value of the cards together. A player may also collect combinations of the same sum.</li>
+                <li><b>Pairing and Combining: </b> Taking cards through pairing and combining can occur on the same play.</li>
+            </ul>
+            <span>
+                On the last hand, there are often uncollected cards left on the board. These cards are awarded to the last player to collect a card.
+            </span>
+        </div>
+        <h2>Jacks</h2>
+        <div>
+            <span>
+                The @Html.Raw(HttpUtility.HtmlDecode(@Global.Jack)) is the most powerful card because it can collect all the cards on the board.
+                <br />
+                However, if a @Html.Raw(HttpUtility.HtmlDecode(@Global.Jack)) is played onto an empty board, it is lost and remains in play until one of the players can collect it, usually with another @Html.Raw(HttpUtility.HtmlDecode(@Global.Jack)).
+            </span>
+        </div>
+        <h2>Pastra</h2>
+        <div>
+            <span>
+                A pastra occurs when a player succeeds in clearing the board without benefit of a @Html.Raw(HttpUtility.HtmlDecode(@Global.Jack)).
+                <br />
+                The pastra is worth twice the card numerical value in points.
+                <br />
+                If a @Html.Raw(HttpUtility.HtmlDecode(@Global.King)) is used to clear the board it is worth 8 points.
+                <br />
+                If a @Html.Raw(HttpUtility.HtmlDecode(@Global.Queen)) is used to clear the board it is worth 6 points.
+                <br />
+                In the rare event that a @Html.Raw(HttpUtility.HtmlDecode(@Global.Jack)) takes a solitary @Html.Raw(HttpUtility.HtmlDecode(@Global.Jack)), no pastra is awarded.
+            </span>
+        </div>
+    </div>
+</div>

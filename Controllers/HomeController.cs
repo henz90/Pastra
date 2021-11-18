@@ -15,6 +15,8 @@ namespace Pastra.Controllers
         public static List<Card> toRemove = new List<Card>();
         public static List<Card> playerCollected = new List<Card>();
         public static List<Card> opponentCollected = new List<Card>();
+        public static List<Card> opponentLastPlayed = new List<Card>();
+        public static int lastCollected = 0;
 
         public ActionResult Index(int? id)
         {
@@ -27,26 +29,35 @@ namespace Pastra.Controllers
 
                 Card opponentPlay = OpponentPlay();
 
+                opponentLastPlayed = new List<Card>();
+
                 PlayCard(opponentPlay, false);
 
-                if (!opponentHand.Any())
+                if (!opponentHand.Any() && deck.getDeck.Count() != 0)
                 {
                     opponentHand = deck.DrawHand();
                     playerHand = deck.DrawHand();
                 }
 
-                ViewBag.OpponentPlay = opponentPlay;
-
                 ViewBag.OpponentHand = opponentHand;
 
                 ViewBag.Board = board;
 
-                //  Game is over
-                if (deck.getDeck.Count() == 0)
-                {
-                    //playerCollected.Distinct(); //  FIXME:  Find where duplicates are happening
+                ViewBag.OpponentLastPlayed = opponentLastPlayed;
 
-                    //opponentCollected.Distinct(); //  FIXME:  Find where duplicates are happening
+                opponentLastPlayed = new List<Card>();
+
+                //  Game is over
+                if (deck.getDeck.Count() == 0 && playerHand.Count() == 0)
+                {
+                    if (lastCollected == -1)
+                    {
+                        opponentCollected.AddRange(board);
+                    }
+                    else
+                    {
+                        playerCollected.AddRange(board);
+                    }
 
                     int playerScore = 0;
 
@@ -60,7 +71,7 @@ namespace Pastra.Controllers
                     {
                         if (card.Pastra > 0)
                         {
-                            playerScore += (int)card.Value * card.Pastra;
+                            playerScore += PastraValue(card) * card.Pastra;
                         }
                     }
 
@@ -68,7 +79,7 @@ namespace Pastra.Controllers
                     {
                         if (card.Pastra > 0)
                         {
-                            opponentScore += (int)card.Value * card.Pastra;
+                            opponentScore += PastraValue(card) * card.Pastra;
                         }
                     }
 
@@ -87,9 +98,9 @@ namespace Pastra.Controllers
 
                     ViewBag.OpponentScore = opponentScore;
 
-                    ViewBag.playerCollected = playerCollected;
+                    ViewBag.playerCollected = playerCollected.OrderByDescending(x => x.Value).OrderByDescending(x => x.Points).OrderByDescending(x => x.Pastra);
 
-                    ViewBag.OpponentCollected = opponentCollected;
+                    ViewBag.OpponentCollected = opponentCollected.OrderByDescending(x => x.Value).OrderByDescending(x => x.Points).OrderByDescending(x => x.Pastra);
 
                     ViewBag.Complete = true;
                 }
@@ -150,6 +161,35 @@ namespace Pastra.Controllers
             }
         }
 
+        private int PastraValue(Card card)
+        {
+            int value = 0;
+
+            if ((int)card.Value <= 10)
+            {
+                value = (int)card.Value;
+            }
+            else
+            {
+                switch (card.Value)
+                {
+                    case Card.VALUE.JACK:
+                        value = 0;
+                        break;
+                    case Card.VALUE.QUEEN:
+                        value = 6;
+                        break;
+                    case Card.VALUE.KING:
+                        value = 8;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return value;
+        }
+
         private Card OpponentPlay()
         {
             //List<Card> memory = board.Concat(playerCollected).Concat(opponentCollected).ToList();
@@ -198,7 +238,7 @@ namespace Pastra.Controllers
                     if ((int)card.Value == 11 && !isTherePastra)
                     {
                         //  FIXME:  Needs additional logic
-                        bestCard = card;
+                        bestCard = opponentHand.OrderBy(x => x.Value).FirstOrDefault();
                     }
                 }
             }
@@ -266,6 +306,10 @@ namespace Pastra.Controllers
                 board.Remove(card);
             }
 
+            opponentLastPlayed.Add(playedCard);
+
+            opponentLastPlayed.AddRange(toRemove);
+
             //  Reset toRemove
             toRemove = new List<Card>();
         }
@@ -280,8 +324,8 @@ namespace Pastra.Controllers
                     if ((int)playedCard.Value >= 12 && playedCard.Value == card.Value)
                     {
                         toRemove.Add(card);
-                        playerCollected.Add(playedCard);
                         playerCollected.Add(card);
+                        playerCollected.Add(playedCard);
                     }
                 }
 
@@ -295,7 +339,12 @@ namespace Pastra.Controllers
                     {
                         playerCollected.Add(playedCard);
                     }
-                    playerCollected.AddRange(toRemove.Distinct());
+                    playerCollected.AddRange(toRemove);
+                }
+
+                if (playerCollected.Count() > 0)
+                {
+                    lastCollected = 1;
                 }
             }
             else
@@ -306,8 +355,8 @@ namespace Pastra.Controllers
                     if ((int)playedCard.Value >= 12 && playedCard.Value == card.Value)
                     {
                         toRemove.Add(card);
-                        opponentCollected.Add(playedCard);
                         opponentCollected.Add(card);
+                        opponentCollected.Add(playedCard);
                     }
                 }
 
@@ -321,7 +370,12 @@ namespace Pastra.Controllers
                     {
                         opponentCollected.Add(playedCard);
                     }
-                    opponentCollected.AddRange(toRemove.Distinct());
+                    opponentCollected.AddRange(toRemove);
+                }
+
+                if (opponentCollected.Count() > 0)
+                {
+                    lastCollected = -1;
                 }
             }
 
@@ -434,14 +488,9 @@ namespace Pastra.Controllers
 
             List<List<Card>> matchedCombos = GetMatches(playedCard, combos);
 
-            int pastraMultiplier = matchedCombos.Count();
+            int pastraMultiplier = matchedCombos.Count() + 1;
 
             playedCard.Pastra = pastraMultiplier;
-
-            if (playedCard.Pastra > 0)
-            {
-                _ = pastraMultiplier;
-            }
         }
 
         private void Start()

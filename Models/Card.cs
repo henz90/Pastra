@@ -36,40 +36,7 @@ namespace Pastra.Models
         public SUIT Suit { get; set; }
         public VALUE Value { get; set; }
         public int Pastra { get; set; }
-
-        public int Points
-        {
-            get
-            {
-                int points = 0;
-
-                switch (Value)
-                {
-                    case VALUE.ACE:
-                        points = 1;
-                        break;
-                    case VALUE.TWO:
-                        if (Suit.Equals("CLUBS"))
-                        {
-                            points = 2;
-                        }
-                        break;
-                    case VALUE.TEN:
-                        if (Suit.Equals("DIAMONDS"))
-                        {
-                            points = 3;
-                        }
-                        break;
-                    case VALUE.JACK:
-                        points = 1;
-                        break;
-                    default:
-                        break;
-                }
-
-                return points;
-            }
-        }
+        public int Points{ get; set; }
         public string Image
         {
             get
