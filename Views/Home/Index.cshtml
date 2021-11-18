@@ -11,68 +11,60 @@
     <div class="rounded-pill">
         @if (ViewBag.Complete)
         {
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="center">
-                            <h2 class="center">
-                                Player Score:
-                            </h2>
-                        </td>
-                        <td class="center">
-                            <h2 class="center">
-                                @ViewBag.PlayerScore
-                            </h2>
-                        </td>
-                        <td class="center">
-                            <h2 class="center">
-                                Opponent Score:
-                            </h2>
-                        </td>
-                        <td class="center">
-                            <h2 class="center">
-                                @ViewBag.OpponentScore
-                            </h2>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h2 class="center">
-                                Cards Collected:
-                            </h2>
-                        </td>
-                        <td>
-                            <h2 class="center">
-                                @Enumerable.Count(ViewBag.playerCollected)
-                            </h2>
-                        </td>
-                        <td>
-                            <h2 class="center">
-                                Cards Collected:
-                            </h2>
-                        </td>
-                        <td>
-                            <h2 class="center">
-                                @Enumerable.Count(ViewBag.opponentCollected)
-                            </h2>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            @foreach (Pastra.Models.Card card in ViewBag.playerCollected)
-                            {
-                                <img src="~/Resources/@card.Image" id="@card.ID" class="card @(card.Pastra > 0 ? "pastra" : "") @(card.Points > 0 ? "points" : "")" />
-                            }
-                        </td>
-                        <td colspan="2">
-                            @foreach (Pastra.Models.Card card in ViewBag.opponentCollected)
-                            {
-                                <img src="~/Resources/@card.Image" id="@card.ID" class="card @(card.Pastra > 0 ? "pastra" : "") @(card.Points > 0 ? "points" : "")" />
-                            }
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="center">
+            <h1 class="center">
+                @Html.ActionLink("Play Again", "Index", "Home", new { id = "" }, new { @class = "again" })
+            </h1>
+        </div>
+        <table class="table table-sm table-bordered">
+            <thead>
+                <tr></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="center">
+                        Player Score:
+                    </td>
+                    <td class="center">
+                        @ViewBag.PlayerScore
+                    </td>
+                    <td class="center">
+                        Opponent Score:
+                    </td>
+                    <td class="center">
+                        @ViewBag.OpponentScore
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Cards Collected:
+                    </td>
+                    <td>
+                        @Enumerable.Count(ViewBag.playerCollected)
+                    </td>
+                    <td>
+                        Cards Collected:
+                    </td>
+                    <td>
+                        @Enumerable.Count(ViewBag.opponentCollected)
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        @foreach (Pastra.Models.Card card in ViewBag.playerCollected)
+                        {
+                            <img src="~/Resources/@card.Image" id="@card.ID" class="card @(card.Pastra > 0 ? "pastra" : "") @(card.Points > 0 ? "points" : "")" />
+                        }
+                    </td>
+                    <td colspan="2" style="column-width:710px">
+                        @foreach (Pastra.Models.Card card in ViewBag.opponentCollected)
+                        {
+                            <img src="~/Resources/@card.Image" id="@card.ID" class="card @(card.Pastra > 0 ? "pastra" : "") @(card.Points > 0 ? "points" : "")" />
+                        }
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         }
         else
         {
@@ -114,7 +106,7 @@
     </div>
 </div>
 
-@if (ViewBag.OpponentLastPlayed != null && ViewBag.OpponentLastPlayed.Count != 1)
+@if (ViewBag.OpponentLastPlayed != null)
 {
     <div class="content float-start">
         <table class="table table-sm table-bordered">

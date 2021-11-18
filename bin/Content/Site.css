@@ -15,6 +15,12 @@ h1, h2 {
     max-height: 264px;
 }
 
+.again {
+    color: black;
+    text-decoration: underline;
+    text-shadow: 1px 1px 2px lightgreen;
+}
+
 .points {
     background-color: crimson;
     border-color: crimson;
